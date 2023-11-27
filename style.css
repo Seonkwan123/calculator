@@ -5,3 +5,18 @@
     padding: 0;
     box-sizing: border-box;
 }
+html, body {
+    height: 100%;
+}
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.calculator {
+    border: 1px black solid;
+    min-height: 600px;
+    min-width: 450px;
+}
