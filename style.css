@@ -19,4 +19,9 @@ main {
     border: 1px black solid;
     min-height: 600px;
     min-width: 450px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
 }
