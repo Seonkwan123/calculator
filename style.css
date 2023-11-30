@@ -19,17 +19,44 @@ main {
     border: 1px black solid;
     min-height: 500px;
     min-width: 400px;
-    display: grid;
 }
 
 .display {
     border: 1px black solid;
-    height: 40%;
+    height: 100px;
     width: auto;
     margin: 5% 5%;
 }
 
 .input,.answer {
+    font-family:'Courier New', Courier, monospace;
+    font-weight: bold;
     text-align: end;
     margin-right: 5px;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 4fr);
+    grid-template-rows: repeat(4, 4fr);
+    grid-gap: 10px;
+    margin: 10px;
+}
+
+.clear {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.delete {
+    grid-column-start: 3;
+    grid-column-end: 5;
+}
+
+.clear, .delete {
+    height: 60px;
+}
+
+.btn {
+    height: 60px;
 }
