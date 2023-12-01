@@ -26,6 +26,7 @@ function output(e) {
     } 
 
     if(isNaN(Number(e.target.innerText)) && e.target.innerText !== '=' && e.target.innerText !== '.') {
+        if (outputString[outputString.length - 1] === e.target.innerText) return;
         operator = e.target.innerText;
         outputString += e.target.innerText;
         displayInput.innerText = outputString;
@@ -39,7 +40,9 @@ function output(e) {
         num2 = Number(secondNumString);
     }
 
-    if(e.target.innerText == '.') createDecimal(e.target.innerText);
+    if(e.target.innerText == '.') {
+        createDecimal(e.target.innerText);
+    }
 
     if(e.target.innerText == '=' || (isNaN(Number(e.target.innerText)) && operator && num2) && e.target.innerText !== '.') {
         answer = executeMath(operator)
@@ -49,17 +52,20 @@ function output(e) {
 
 function createDecimal(decimal) {
     if (!num2 && num2 !== 0) {
+        if (firstNumString.includes('.')) return; // return if decimal already incldued
         firstNumString += '.'
         outputString += decimal;
         displayInput.innerText = outputString;
         num1 = Number(firstNumString);
     } else if (num2 || num2 === 0) {
+        if (secondNumString.includes('.')) return; // return if decimal already incldued
         secondNumString += '.'
         outputString += decimal;
         displayInput.innerText = outputString;
         num2 = Number(secondNumString);
     }
 }
+
 
 function executeMath(operator) {
     if (operator == '+') return add(num1,num2);
