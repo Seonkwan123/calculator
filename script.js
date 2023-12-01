@@ -4,8 +4,10 @@ let num1;
 let operator;
 let num2;
 
-const input = document.querySelector('.input')
-const answer = document.querySelector('.answer')
+
+
+const displayInput = document.querySelector('.displayInput')
+const displayAnswer = document.querySelector('.displayAnswer')
 const buttons = document.querySelectorAll('.btn');
 
 buttons.forEach(button => {
@@ -16,25 +18,25 @@ function output(e) {
     if(!isNaN(Number(e.target.innerText)) && !operator) {
         num1 = Number(e.target.innerText);
         outputArray.push(Number(e.target.innerText));
-        input.innerText = outputArray.join('');
+        displayInput.innerText = outputArray.join('');
     } 
 
     if(isNaN(Number(e.target.innerText)) && e.target.innerText !== '=') {
         operator = e.target.innerText;
         outputArray.push(e.target.innerText);
-        input.innerText = outputArray.join('');
+        displayInput.innerText = outputArray.join('');
     }
 
     if(operator && !isNaN(Number(e.target.innerText))) {
         num2 = Number(e.target.innerText);
-        executeMath(operator)
+        output = executeMath(operator)
         outputArray.push(e.target.innerText);
-        input.innerText = outputArray.join('');
+        displayInput.innerText = outputArray.join('');
     }
 }
 
 function executeMath(operator) {
-    if (operator == '+') add(num1,num2);
+    if (operator == '+') return add(num1,num2);
     if (operator == '-') subtract(num1,num2);
     if (operator == '%') divide(num1,num2);
     if (operator == 'x') multiply(num1,num2);
