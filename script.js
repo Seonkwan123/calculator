@@ -1,6 +1,6 @@
-const firstNumArray = [];
-const outputArray = [];
-const secondNumArray = [];
+let firstNumString = '';
+let secondNumString = '';
+let outputString = ''; 
 
 let num1;
 let operator;
@@ -19,27 +19,45 @@ buttons.forEach(button => {
 
 function output(e) {
     if(!isNaN(Number(e.target.innerText)) && !operator) {
-        outputArray.push(Number(e.target.innerText));
-        displayInput.innerText = outputArray.join('');
-        firstNumArray.push(Number(e.target.innerText))
-        num1 = Number(firstNumArray.join(''));
+        firstNumString += e.target.innerText;
+        outputString += e.target.innerText;
+        displayInput.innerText = outputString;
+        num1 = Number(firstNumString);
     } 
 
-    if(isNaN(Number(e.target.innerText)) && e.target.innerText !== '=') {
+    if(isNaN(Number(e.target.innerText)) && e.target.innerText !== '=' && e.target.innerText !== '.') {
         operator = e.target.innerText;
-        outputArray.push(e.target.innerText);
-        displayInput.innerText = outputArray.join('');
+        outputString += e.target.innerText;
+        displayInput.innerText = outputString;
+        operator = e.target.innerText;
     }
 
     if(operator && !isNaN(Number(e.target.innerText))) {
-        outputArray.push(e.target.innerText);
-        displayInput.innerText = outputArray.join('');
-        secondNumArray.push(Number(e.target.innerText))
-        num2 = Number(secondNumArray.join(''));
+        secondNumString += e.target.innerText;
+        outputString += e.target.innerText;
+        displayInput.innerText = outputString;
+        num2 = Number(secondNumString);
     }
-    if(e.target.innerText == '=' || (isNaN(Number(e.target.innerText)) && operator && num2)) {
+
+    if(e.target.innerText == '.') createDecimal(e.target.innerText);
+
+    if(e.target.innerText == '=' || (isNaN(Number(e.target.innerText)) && operator && num2) && e.target.innerText !== '.') {
         answer = executeMath(operator)
         displayAnswer.innerText = answer;
+    }
+}
+
+function createDecimal(decimal) {
+    if (!num2) {
+        firstNumString += '.'
+        outputString += decimal;
+        displayInput.innerText = outputString;
+        num1 = Number(firstNumString);
+    } else if (num2) {
+        secondNumString += '.'
+        outputString += decimal;
+        displayInput.innerText = outputString;
+        num2 = Number(secondNumString);
     }
 }
 
