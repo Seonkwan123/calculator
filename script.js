@@ -13,7 +13,7 @@ buttons.forEach(button => {
 })
 
 function output(e) {
-    if(!isNaN(Number(e.target.innerText))) {
+    if(!isNaN(Number(e.target.innerText)) && !operator) {
         num1 = Number(e.target.innerText);
         outputArray.push(Number(e.target.innerText));
         input.innerText = outputArray.join('');
@@ -27,11 +27,18 @@ function output(e) {
 
     if(operator && !isNaN(Number(e.target.innerText))) {
         num2 = Number(e.target.innerText);
+        executeMath(operator)
         outputArray.push(e.target.innerText);
         input.innerText = outputArray.join('');
     }
 }
 
+function executeMath(operator) {
+    if (operator == '+') add(num1,num2);
+    if (operator == '-') subtract(num1,num2);
+    if (operator == '%') divide(num1,num2);
+    if (operator == 'x') multiply(num1,num2);
+}
 
 
 
@@ -41,7 +48,7 @@ function add(num1,num2) {
 }
 
 function subtract(num1,num2) {
-    return num1 + num2;
+    return num1 - num2;
 }
 
 function divide(num1,num2) {
