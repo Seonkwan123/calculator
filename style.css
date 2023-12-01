@@ -28,7 +28,7 @@ main {
     margin: 5% 5%;
 }
 
-.input,.answer {
+.display-input,.display-answer {
     font-family:'Courier New', Courier, monospace;
     font-weight: bold;
     text-align: end;
