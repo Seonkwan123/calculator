@@ -48,12 +48,12 @@ function output(e) {
 }
 
 function createDecimal(decimal) {
-    if (!num2) {
+    if (!num2 && num2 !== 0) {
         firstNumString += '.'
         outputString += decimal;
         displayInput.innerText = outputString;
         num1 = Number(firstNumString);
-    } else if (num2) {
+    } else if (num2 || num2 === 0) {
         secondNumString += '.'
         outputString += decimal;
         displayInput.innerText = outputString;
