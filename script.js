@@ -19,6 +19,7 @@ buttons.forEach(button => {
 
 function output(e) {
     if(!isNaN(Number(e.target.innerText)) && !operator) {
+        if (e.target.innerText === '0' && !num1) return;
         firstNumString += e.target.innerText;
         outputString += e.target.innerText;
         displayInput.innerText = outputString;
@@ -34,6 +35,7 @@ function output(e) {
     }
 
     if(operator && !isNaN(Number(e.target.innerText))) {
+        if (e.target.innerText === '0' && !num2) return;
         secondNumString += e.target.innerText;
         outputString += e.target.innerText;
         displayInput.innerText = outputString;
@@ -51,21 +53,28 @@ function output(e) {
 }
 
 function createDecimal(decimal) {
-    if (!num2 && num2 !== 0) {
-        if (firstNumString.includes('.')) return; // return if decimal already incldued
-        firstNumString += '.'
-        outputString += decimal;
+    if (!operator) {
+        if (firstNumString.includes(decimal)) return; // return if decimal already incldued
+        if (!num1) {                            // This if statement checks whether decimal is the first to be pressed or not.
+            outputString += 0 + decimal;
+            firstNumString += 0 + decimal;
+        } else { 
+            firstNumString += decimal;
+            outputString += decimal;
+        }
         displayInput.innerText = outputString;
-        num1 = Number(firstNumString);
-    } else if (num2 || num2 === 0) {
-        if (secondNumString.includes('.')) return; // return if decimal already incldued
-        secondNumString += '.'
-        outputString += decimal;
+    } else if (operator) {
+        if (secondNumString.includes(decimal)) return; // return if decimal already incldued
+        if (!num2) {
+            outputString += 0 + decimal;
+            firstNumString += 0 + decimal;
+        } else {
+            firstNumString += decimal;
+            outputString += decimal;
+        } 
         displayInput.innerText = outputString;
-        num2 = Number(secondNumString);
     }
 }
-
 
 function executeMath(operator) {
     if (operator == '+') return add(num1,num2);
