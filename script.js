@@ -20,26 +20,17 @@ buttons.forEach(button => {
 function output(e) {
     if(!isNaN(Number(e.target.innerText)) && !operator) {
         if (e.target.innerText === '0' && !num1) return;
-        firstNumString += e.target.innerText;
-        outputString += e.target.innerText;
-        displayInput.innerText = outputString;
-        num1 = Number(firstNumString);
+        updateFirstNum(e.target.innerText)
     } 
 
     if(isNaN(Number(e.target.innerText)) && e.target.innerText !== '=' && e.target.innerText !== '.') {
         if (outputString[outputString.length - 1] === e.target.innerText) return;
-        operator = e.target.innerText;
-        outputString += e.target.innerText;
-        displayInput.innerText = outputString;
-        operator = e.target.innerText;
+        updateOperator(e.target.innerText)
     }
 
     if(operator && !isNaN(Number(e.target.innerText))) {
         if (e.target.innerText === '0' && !num2) return;
-        secondNumString += e.target.innerText;
-        outputString += e.target.innerText;
-        displayInput.innerText = outputString;
-        num2 = Number(secondNumString);
+        updateSecondNum(e.target.innerText)
     }
 
     if(e.target.innerText == '.') {
@@ -50,6 +41,26 @@ function output(e) {
         answer = executeMath(operator)
         displayAnswer.innerText = answer;
     }
+}
+
+function updateFirstNum(target) {
+    firstNumString += target;
+    outputString += target;
+    displayInput.innerText = outputString;
+    num1 = Number(firstNumString);
+}
+
+function updateOperator(target) {
+    operator = target;
+    outputString += target;
+    displayInput.innerText = outputString;
+}
+
+function updateSecondNum(target) {
+    secondNumString += target;
+    outputString += target;
+    displayInput.innerText = outputString;
+    num2 = Number(secondNumString);
 }
 
 function createDecimal(decimal) {
@@ -67,9 +78,9 @@ function createDecimal(decimal) {
         if (secondNumString.includes(decimal)) return; // return if decimal already incldued
         if (!num2) {
             outputString += 0 + decimal;
-            firstNumString += 0 + decimal;
+            secondNumString += 0 + decimal;
         } else {
-            firstNumString += decimal;
+            secondNumString += decimal;
             outputString += decimal;
         } 
         displayInput.innerText = outputString;

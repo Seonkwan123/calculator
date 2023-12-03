@@ -22,11 +22,16 @@ main {
 }
 
 .display {
+    display: flex;
+    flex-direction: column;
     border: 1px black solid;
     height: 100px;
     width: auto;
     margin: 5% 5%;
+    justify-content: end;
 }
+
+
 
 .display-input,.display-answer {
     font-family:'Courier New', Courier, monospace;
