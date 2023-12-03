@@ -29,8 +29,10 @@ function output(e) {
     }
 
     if(operator && !isNaN(Number(e.target.innerText))) {
-        if (e.target.innerText === '0' && !num2) return;
-        updateSecondNum(e.target.innerText)
+        if (e.target.innerText === '0') {
+            if(num2 === 0) return;
+            else updateSecondNum(e.target.innerText)
+        } else updateSecondNum(e.target.innerText)
     }
 
     if(e.target.innerText == '.') {
@@ -66,17 +68,18 @@ function updateSecondNum(target) {
 function createDecimal(decimal) {
     if (!operator) {
         if (firstNumString.includes(decimal)) return; // return if decimal already incldued
-        if (!num1) {                            // This if statement checks whether decimal is the first to be pressed or not.
+        if (!num1 && num1 !== 1) {                            // This if statement checks whether decimal is the first to be pressed or not.
             outputString += 0 + decimal;
             firstNumString += 0 + decimal;
-        } else { 
+        } 
+        else { 
             firstNumString += decimal;
             outputString += decimal;
         }
         displayInput.innerText = outputString;
     } else if (operator) {
         if (secondNumString.includes(decimal)) return; // return if decimal already incldued
-        if (!num2) {
+        if (!num2 && num2 !== 0) {
             outputString += 0 + decimal;
             secondNumString += 0 + decimal;
         } else {
