@@ -19,9 +19,8 @@ buttons.forEach(button => {
 
 function output(e) {
     if(!isNaN(Number(e.target.innerText)) && !operator) {
-        if (e.target.innerText === '0' && !num1) return;
+        if (e.target.innerText === '0' && !firstNumString) return;
         [num1, firstNumString] = updateNum(e.target.innerText, firstNumString, num1)
-        console.log(num1, firstNumString)
     } 
 
     if(isNaN(Number(e.target.innerText)) && e.target.innerText !== '=' && e.target.innerText !== '.') {
@@ -30,10 +29,9 @@ function output(e) {
     }
 
     if(operator && !isNaN(Number(e.target.innerText))) {
-        if (e.target.innerText === '0') {
-            if(num2 === 0) return;
-            else updateNum(e.target.innerText, secondNumString, num2)
-        } else updateNum(e.target.innerText, secondNumString, num2)
+        if (e.target.innerText === '0' && !secondNumString) return;  
+        if (!secondNumString) displayAnswer.innerText = '';
+        [num2, secondNumString] = updateNum(e.target.innerText, secondNumString, num2);
     }
 
     if(e.target.innerText == '.') {
@@ -49,7 +47,7 @@ function output(e) {
 function updateNum(target, numString, num) {
     numString += target;
     outputString += target;
-    displayInput.innerText = outputString;
+    displayAnswer.innerText += target;
     num = Number(numString);
     return [num, numString];
 }
@@ -71,7 +69,7 @@ function createDecimal(decimal) {
             firstNumString += decimal;
             outputString += decimal;
         }
-        displayInput.innerText = outputString;
+        displayAnswer.innerText += decimal;
     } else if (operator) {
         if (secondNumString.includes(decimal)) return; // return if decimal already incldued
         if (!num2 && num2 !== 0) {
@@ -81,7 +79,7 @@ function createDecimal(decimal) {
             secondNumString += decimal;
             outputString += decimal;
         } 
-        displayInput.innerText = outputString;
+        displayAnswer.innerText += decimal;
     }
 }
 
