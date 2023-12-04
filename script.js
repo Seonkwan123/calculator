@@ -20,7 +20,8 @@ buttons.forEach(button => {
 function output(e) {
     if(!isNaN(Number(e.target.innerText)) && !operator) {
         if (e.target.innerText === '0' && !num1) return;
-        updateFirstNum(e.target.innerText)
+        [num1, firstNumString] = updateNum(e.target.innerText, firstNumString, num1)
+        console.log(num1, firstNumString)
     } 
 
     if(isNaN(Number(e.target.innerText)) && e.target.innerText !== '=' && e.target.innerText !== '.') {
@@ -31,8 +32,8 @@ function output(e) {
     if(operator && !isNaN(Number(e.target.innerText))) {
         if (e.target.innerText === '0') {
             if(num2 === 0) return;
-            else updateSecondNum(e.target.innerText)
-        } else updateSecondNum(e.target.innerText)
+            else updateNum(e.target.innerText, secondNumString, num2)
+        } else updateNum(e.target.innerText, secondNumString, num2)
     }
 
     if(e.target.innerText == '.') {
@@ -45,11 +46,12 @@ function output(e) {
     }
 }
 
-function updateFirstNum(target) {
-    firstNumString += target;
+function updateNum(target, numString, num) {
+    numString += target;
     outputString += target;
     displayInput.innerText = outputString;
-    num1 = Number(firstNumString);
+    num = Number(numString);
+    return [num, numString];
 }
 
 function updateOperator(target) {
@@ -58,17 +60,10 @@ function updateOperator(target) {
     displayInput.innerText = outputString;
 }
 
-function updateSecondNum(target) {
-    secondNumString += target;
-    outputString += target;
-    displayInput.innerText = outputString;
-    num2 = Number(secondNumString);
-}
-
 function createDecimal(decimal) {
     if (!operator) {
         if (firstNumString.includes(decimal)) return; // return if decimal already incldued
-        if (!num1 && num1 !== 1) {                            // This if statement checks whether decimal is the first to be pressed or not.
+        if (!num1 && num1 !== 0) {                            // This if statement checks whether decimal is the first to be pressed or not.
             outputString += 0 + decimal;
             firstNumString += 0 + decimal;
         } 
