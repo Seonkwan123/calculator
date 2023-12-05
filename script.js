@@ -19,7 +19,7 @@ buttons.forEach(button => {
 
 function output(e) {
     if(!isNaN(Number(e.target.innerText)) && !operator) {
-        if (e.target.innerText === '0' && !firstNumString) return;
+        if (e.target.innerText === '0' && firstNumString === 0) return;
         [num1, firstNumString] = updateNum(e.target.innerText, firstNumString, num1)
     } 
 
@@ -29,7 +29,7 @@ function output(e) {
     }
 
     if(operator && !isNaN(Number(e.target.innerText))) {
-        if (e.target.innerText === '0' && !secondNumString) return;  
+        if (e.target.innerText === '0' && secondNumString === '0')return;  
         if (!secondNumString) displayAnswer.innerText = '';
         [num2, secondNumString] = updateNum(e.target.innerText, secondNumString, num2);
     }
@@ -64,22 +64,26 @@ function createDecimal(decimal) {
         if (!num1 && num1 !== 0) {                            // This if statement checks whether decimal is the first to be pressed or not.
             outputString += 0 + decimal;
             firstNumString += 0 + decimal;
+            displayAnswer.innerText += 0 + decimal;
         } 
         else { 
             firstNumString += decimal;
             outputString += decimal;
+            displayAnswer.innerText += decimal;
         }
-        displayAnswer.innerText += decimal;
     } else if (operator) {
         if (secondNumString.includes(decimal)) return; // return if decimal already incldued
         if (!num2 && num2 !== 0) {
             outputString += 0 + decimal;
             secondNumString += 0 + decimal;
+            displayAnswer.innerText += 0 + decimal;
         } else {
             secondNumString += decimal;
             outputString += decimal;
+            displayAnswer.innerText += decimal;
         } 
-        displayAnswer.innerText += decimal;
+        displayAnswer.innerText = '' // if decimal pressed first after operator, reset the answer displayed on screen
+        displayAnswer.innerText += secondNumString;
     }
 }
 
