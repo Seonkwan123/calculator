@@ -9,17 +9,29 @@ let answer;
 
 
 
+const clearBtn = document.querySelector('.clear');
+const deleteBtn = document.querySelector('.delete');
 const displayInput = document.querySelector('.display-input')
 const displayAnswer = document.querySelector('.display-answer')
 const buttons = document.querySelectorAll('.btn');
+
 
 buttons.forEach(button => {
     button.addEventListener('click', output)
 })
 
+clearBtn.onclick = clear;
+
+function clear () {
+    [num1,firstNumString, outputString] = [null ,'', ''];
+    [operator, num2, secondNumString] = [null, null, ''];
+    displayInput.innerText = '';
+    displayAnswer.innerText = outputString;
+}
+
 function output(e) {
     if(!isNaN(Number(e.target.innerText)) && !operator) {
-        if (e.target.innerText === '0' && firstNumString === 0) return;
+        if (e.target.innerText === '0' && firstNumString === '0') return;
         [num1, firstNumString] = updateNum(e.target.innerText, firstNumString, num1)
     } 
 
