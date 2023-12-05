@@ -1,8 +1,8 @@
-let firstNumString = '';
+let firstNumString = '0';
 let secondNumString = '';
-let outputString = ''; 
+let outputString = '0'; 
 
-let num1;
+let num1 = 0;
 let operator;
 let num2;
 let answer;
@@ -15,6 +15,7 @@ const displayInput = document.querySelector('.display-input')
 const displayAnswer = document.querySelector('.display-answer')
 const buttons = document.querySelectorAll('.btn');
 
+displayAnswer.innerText = outputString;
 
 buttons.forEach(button => {
     button.addEventListener('click', output)
@@ -23,7 +24,7 @@ buttons.forEach(button => {
 clearBtn.onclick = clear;
 
 function clear () {
-    [num1,firstNumString, outputString] = [null ,'', ''];
+    [num1,firstNumString, outputString] = [0 ,'0', '0'];
     [operator, num2, secondNumString] = [null, null, ''];
     displayInput.innerText = '';
     displayAnswer.innerText = outputString;
@@ -33,9 +34,10 @@ function output(e) {
     if(!isNaN(Number(e.target.innerText)) && !operator) {
         if (e.target.innerText === '0' && firstNumString === '0') return;
         [num1, firstNumString] = updateNum(e.target.innerText, firstNumString, num1)
+        outputString = firstNumString;
     } 
 
-    if(isNaN(Number(e.target.innerText)) && e.target.innerText !== '=' && e.target.innerText !== '.') {
+    else if(isNaN(Number(e.target.innerText)) && e.target.innerText !== '=' && e.target.innerText !== '.') {
         if (operator && (num2 || num2 === 0)) {
             answer = executeMath(operator);
             resetVariable();
@@ -44,26 +46,27 @@ function output(e) {
         updateOperator(e.target.innerText)
     }
 
-    if(operator && !isNaN(Number(e.target.innerText))) {
+     else if(operator && !isNaN(Number(e.target.innerText))) {
         if (e.target.innerText === '0' && secondNumString === '0')return;  
         if (!secondNumString) displayAnswer.innerText = '';
         [num2, secondNumString] = updateNum(e.target.innerText, secondNumString, num2);
+        outputString += e.target.innerText;
     }
 
-    if(e.target.innerText == '.') {
+    else if(e.target.innerText == '.') {
         createDecimal(e.target.innerText);
     }
 
-    if(e.target.innerText == '=' && (num2 || num2 === 0)) {
+    else if(e.target.innerText == '=' && (num2 || num2 === 0)) {
         answer = executeMath(operator)
         resetVariable();
     }
 }
 
 function updateNum(target, numString, num) {
-    numString += target;
-    outputString += target;
-    displayAnswer.innerText += target;
+    if (numString === '0') numString = target;
+    else numString += target;
+    displayAnswer.innerText = numString;
     num = Number(numString);
     return [num, numString];
 }
@@ -108,6 +111,7 @@ function resetVariable() {
     displayAnswer.innerText = answer;
     [num1,firstNumString, outputString] = [answer ,`${answer}`,`${answer}`];
     [operator, num2, secondNumString] = [null, null, ''];
+    answer = null;
 }
 
 function executeMath(operator) {
