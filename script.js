@@ -40,7 +40,11 @@ function output(e) {
 
     if(e.target.innerText == '=' || (isNaN(Number(e.target.innerText)) && operator && num2) && e.target.innerText !== '.') {
         answer = executeMath(operator)
+        displayInput.innerText = outputString + ' = ';
         displayAnswer.innerText = answer;
+        num1 = answer;
+        operator = null;
+        num2 = null;
     }
 }
 
