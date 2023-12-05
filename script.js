@@ -33,8 +33,12 @@ function clear () {
 function output(e) {
     if(!isNaN(Number(e.target.innerText)) && !operator) {
         if (e.target.innerText === '0' && firstNumString === '0') return;
+        else if(answer || answer === 0) {
+            resetAnswer(e.target.innerText);
+        } else {
         [num1, firstNumString] = updateNum(e.target.innerText, firstNumString, num1)
         outputString = firstNumString;
+        }
     } 
 
     else if(isNaN(Number(e.target.innerText)) && e.target.innerText !== '=' && e.target.innerText !== '.') {
@@ -110,6 +114,15 @@ function resetVariable() {
     displayInput.innerText = outputString + ' = ';
     displayAnswer.innerText = answer;
     [num1,firstNumString, outputString] = [answer ,`${answer}`,`${answer}`];
+    [operator, num2, secondNumString] = [null, null, ''];
+}
+
+function resetAnswer(target) {
+    outputString = target;
+    displayInput.innerText = '';
+    displayAnswer.innerText = outputString;
+    firstNumString = target;
+    num1 = Number(firstNumString);
     [operator, num2, secondNumString] = [null, null, ''];
     answer = null;
 }
