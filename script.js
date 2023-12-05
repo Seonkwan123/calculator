@@ -24,7 +24,11 @@ function output(e) {
     } 
 
     if(isNaN(Number(e.target.innerText)) && e.target.innerText !== '=' && e.target.innerText !== '.') {
-        if (outputString[outputString.length - 1] === e.target.innerText) return;
+        if (operator && (num2 || num2 === 0)) {
+            answer = executeMath(operator);
+            resetVariable();
+        }
+        if (operator) return;
         updateOperator(e.target.innerText)
     }
 
@@ -38,13 +42,9 @@ function output(e) {
         createDecimal(e.target.innerText);
     }
 
-    if(e.target.innerText == '=' || (isNaN(Number(e.target.innerText)) && operator && num2) && e.target.innerText !== '.') {
+    if(e.target.innerText == '=' && (num2 || num2 === 0)) {
         answer = executeMath(operator)
-        displayInput.innerText = outputString + ' = ';
-        displayAnswer.innerText = answer;
-        num1 = answer;
-        operator = null;
-        num2 = null;
+        resetVariable();
     }
 }
 
@@ -89,6 +89,13 @@ function createDecimal(decimal) {
         displayAnswer.innerText = '' // if decimal pressed first after operator, reset the answer displayed on screen
         displayAnswer.innerText += secondNumString;
     }
+}
+
+function resetVariable() {
+    displayInput.innerText = outputString + ' = ';
+    displayAnswer.innerText = answer;
+    [num1,firstNumString, outputString] = [answer ,`${answer}`,`${answer}`];
+    [operator, num2, secondNumString] = [null, null, ''];
 }
 
 function executeMath(operator) {
