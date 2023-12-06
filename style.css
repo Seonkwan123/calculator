@@ -21,6 +21,7 @@ main {
     min-width: 350px;
     background-color:rgba(7, 6, 6, 0.733);
     border-radius: 15px;
+    box-shadow: 10px 10px 40px grey;
 }
 
 .display {
