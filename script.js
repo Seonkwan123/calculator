@@ -20,8 +20,21 @@ displayAnswer.innerText = outputString;
 buttons.forEach(button => {
     button.addEventListener('click', output)
 })
-
 clearBtn.onclick = clear;
+deleteBtn.onclick = deleteNum;
+
+function deleteNum() { 
+    if ((num1 || num1 ===0) && !operator) {
+        firstNumString = firstNumString.slice(0, -1);
+        num1 = Number(firstNumString);
+        displayAnswer.innerText = firstNumString;
+    } else if(num2 || num2 === 0){
+        secondNumString = secondNumString.slice(0,-1);
+        num2 = Number(secondNumString);
+        displayAnswer.innerText = secondNumString;
+    }
+    
+}
 
 function clear () {
     [num1,firstNumString, outputString] = [0 ,'0', '0'];
