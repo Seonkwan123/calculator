@@ -40,17 +40,13 @@ function deleteNum() {
     
 }
 
-function clear () {
-    [num1,firstNumString, outputString] = [0 ,'0', '0'];
-    [operator, num2, secondNumString] = [null, null, ''];
-    displayInput.innerText = '';
-    displayAnswer.innerText = outputString;
-}
+
 
 function output(e) {
+    // This if statement checks to see if operator has been assigned to distinguish whether button selected is for num1 or num2
     if(!isNaN(Number(e.target.innerText)) && !operator) {
-        if (e.target.innerText === '0' && firstNumString === '0') return;
-        else if(answer || answer === 0) {
+        if (e.target.innerText === '0' && firstNumString === '0') return;  // This eliminates duplicate zeros if the num is already zero
+        else if(answer || answer === 0) { // This checks to see if '+' has been pressed. 
             resetAnswer(e.target.innerText);
         } else {
         [num1, firstNumString] = updateNum(e.target.innerText, firstNumString, num1)
@@ -59,13 +55,13 @@ function output(e) {
     } 
 
     else if(isNaN(Number(e.target.innerText)) && e.target.innerText !== '=' && e.target.innerText !== '.') {
-        if (operator && (num2 || num2 === 0)) {
+        if (operator && (num2 || num2 === 0)) { // This statement allows math to be executed when operator is pressed
             answer = executeMath(operator);
             resetVariable();
         }
         updateOperator(e.target.innerText)
     }
-
+    // This statement checks to see if num2 needs to be selected.
      else if(operator && !isNaN(Number(e.target.innerText))) {
         if (e.target.innerText === '0' && secondNumString === '0')return;  
         if (!secondNumString) displayAnswer.innerText = '';
@@ -83,6 +79,30 @@ function output(e) {
     }
 }
 
+function clear () {
+    [num1,firstNumString, outputString] = [0 ,'0', '0'];
+    [operator, num2, secondNumString] = [null, null, ''];
+    displayInput.innerText = '';
+    displayAnswer.innerText = outputString;
+}
+
+function resetVariable() {
+    displayInput.innerText = outputString + ' = ';
+    displayAnswer.innerText = answer;
+    [num1,firstNumString, outputString] = [answer ,`${answer}`,`${answer}`];
+    [operator, num2, secondNumString] = [null, null, ''];
+}
+// This function is for when equal is pressed, and number is being typed right after. 
+function resetAnswer(target) {
+    outputString = target;
+    displayInput.innerText = '';
+    displayAnswer.innerText = outputString;
+    firstNumString = target;
+    num1 = Number(firstNumString);
+    [operator, num2, secondNumString] = [null, null, ''];
+    answer = null;
+}
+
 function updateNum(target, numString, num) {
     if (numString === '0') numString = target;
     else numString += target;
@@ -92,7 +112,7 @@ function updateNum(target, numString, num) {
 }
 
 function updateOperator(target) {
-    if(operator) {
+    if(operator) { // This statement will allow operator to change if pressed consecutively. 
         operator = target;
         outputString = outputString.slice(0,-1);
         outputString += target;
@@ -104,10 +124,11 @@ function updateOperator(target) {
     }
 }
 
+// NOTE that decimal is only added to number strings and NOT the numbers themselves. This is to make sure that decimal is considered. Num(2.) is still 2!!
 function createDecimal(decimal) {
     if (!operator) {
         if (firstNumString.includes(decimal)) return; // return if decimal already incldued
-        if (!num1 && num1 !== 0) {                            // This if statement checks whether decimal is the first to be pressed or not.
+        if (!num1 && num1 !== 0) {                    // This if statement checks whether decimal is the first to be pressed or not.
             outputString += 0 + decimal;
             firstNumString += 0 + decimal;
             displayAnswer.innerText += 0 + decimal;
@@ -133,22 +154,7 @@ function createDecimal(decimal) {
     }
 }
 
-function resetVariable() {
-    displayInput.innerText = outputString + ' = ';
-    displayAnswer.innerText = answer;
-    [num1,firstNumString, outputString] = [answer ,`${answer}`,`${answer}`];
-    [operator, num2, secondNumString] = [null, null, ''];
-}
 
-function resetAnswer(target) {
-    outputString = target;
-    displayInput.innerText = '';
-    displayAnswer.innerText = outputString;
-    firstNumString = target;
-    num1 = Number(firstNumString);
-    [operator, num2, secondNumString] = [null, null, ''];
-    answer = null;
-}
 
 function executeMath(operator) {
     if (operator == '+') return add(num1,num2);
@@ -156,9 +162,6 @@ function executeMath(operator) {
     if (operator == '%') return divide(num1,num2);
     if (operator == 'x') return multiply(num1,num2);
 }
-
-
-
 
 function add(num1,num2) {
     return ((num1 *10) + (num2 * 10))/10;
