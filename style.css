@@ -68,6 +68,10 @@ main {
     grid-column-end: 5;
 }
 
+button {
+    box-shadow: 3px 3px 5px blue;
+}
+
 .clear, .delete {
     height: 55px;
     font-family: 'Courier New', Courier, monospace;

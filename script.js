@@ -63,7 +63,6 @@ function output(e) {
             answer = executeMath(operator);
             resetVariable();
         }
-        if (operator) return;
         updateOperator(e.target.innerText)
     }
 
@@ -93,9 +92,16 @@ function updateNum(target, numString, num) {
 }
 
 function updateOperator(target) {
+    if(operator) {
+        operator = target;
+        outputString = outputString.slice(0,-1);
+        outputString += target;
+        displayInput.innerText = outputString
+    } else {
     operator = target;
     outputString += target;
     displayInput.innerText = outputString;
+    }
 }
 
 function createDecimal(decimal) {
@@ -155,19 +161,19 @@ function executeMath(operator) {
 
 
 function add(num1,num2) {
-    return num1 + num2;
+    return ((num1 *10) + (num2 * 10))/10;
 }
 
 function subtract(num1,num2) {
-    return num1 - num2;
+    return ((num1 *10) - (num2 * 10))/10;
 }
 
 function divide(num1,num2) {
-    return num1 / num2;
+    return ((num1 *10) / (num2 * 10))/10;
 }
 
 function multiply(num1,num2) {
-    return num1 * num2;
+    return ((num1 *10) * (num2 * 10))/10;
 }
 
 function operate(num1,operator,num2) {
