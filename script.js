@@ -24,12 +24,16 @@ clearBtn.onclick = clear;
 deleteBtn.onclick = deleteNum;
 
 function deleteNum() { 
+    if (firstNumString === '0') return;
     if ((num1 || num1 ===0) && !operator) {
         firstNumString = firstNumString.slice(0, -1);
+        outputString = outputString.slice(0,-1)
         num1 = Number(firstNumString);
         displayAnswer.innerText = firstNumString;
     } else if(num2 || num2 === 0){
+        if(!secondNumString) return;
         secondNumString = secondNumString.slice(0,-1);
+        outputString = outputString.slice(0,-1)
         num2 = Number(secondNumString);
         displayAnswer.innerText = secondNumString;
     }
