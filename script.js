@@ -43,7 +43,7 @@ function deleteNum() {
 function output(e) {
     // This if statement checks to see if operator has been assigned to distinguish whether button selected is for num1 or num2
     if(!isNaN(Number(e.target.innerText)) && !operator) {
-        if (firstNumString.length > 10) return;
+        if (firstNumString.length > 8) return;
         if (e.target.innerText === '0' && firstNumString === '0') return;  // This eliminates duplicate zeros if the num is already zero
         else if(answer || answer === 0) { // This checks to see if '+' has been pressed. 
             resetAnswer(e.target.innerText);
@@ -62,7 +62,7 @@ function output(e) {
     }
     // This statement checks to see if num2 needs to be selected.
      else if(operator && !isNaN(Number(e.target.innerText))) {
-        if(secondNumString.length > 10) return;
+        if(secondNumString.length > 8) return;
         if (e.target.innerText === '0' && secondNumString === '0')return;  
         if (!secondNumString) displayAnswer.innerText = '';
         [num2, secondNumString] = updateNum(e.target.innerText, secondNumString, num2);
