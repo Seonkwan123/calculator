@@ -87,10 +87,16 @@ function clear () {
 }
 
 function resetVariable() {
+    if (answer === undefined) {
+        outputString = outputString.slice (0,-1);
+        num2 = null;
+        secondNumString = ''
+    } else {
     displayInput.innerText = outputString + ' = ';
     displayAnswer.innerText = answer;
     [num1,firstNumString, outputString] = [answer ,`${answer}`,`${answer}`];
     [operator, num2, secondNumString] = [null, null, ''];
+    }
 }
 // This function is for when equal is pressed, and number is being typed right after. 
 function resetAnswer(target) {
@@ -172,7 +178,11 @@ function subtract(num1,num2) {
 }
 
 function divide(num1,num2) {
-    return ((num1 *10) / (num2 * 10))/10;
+    if(num2 === 0) {
+        alert('you cannot divide number by 0!!');
+        return;
+    }
+    return ((num1)/(num2)*10)/10;
 }
 
 function multiply(num1,num2) {
