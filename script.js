@@ -23,7 +23,6 @@ buttons.forEach(button => {
 })
 document.addEventListener('keydown', e=> {
     handleKeyboardInput(e.key);
-    console.log(e);
 })
 
 clearBtn.onclick = clear;
@@ -47,9 +46,13 @@ function deleteNum() {
 }
 
 function handleKeyboardInput(key) {
-    const number = '1234567890'
-    if (number.includes(key)) output(key)
-}
+    const number = '1234567890.'
+    const operators = '+-*=/'
+    if(key === 'Enter') key = '='
+    if (number.includes(key) || operators.includes(key)) output(key)
+    if (key === "Escape") clear();
+    if (key === "Backspace") deleteNum();
+} 
 
 function output(target) {
     // This if statement checks to see if operator has been assigned to distinguish whether button selected is for num1 or num2
@@ -177,7 +180,7 @@ function executeMath(operator) {
     if (operator == '+') return add(num1,num2);
     if (operator == '-') return subtract(num1,num2);
     if (operator == '/') return divide(num1,num2);
-    if (operator == 'x') return multiply(num1,num2);
+    if (operator == '*') return multiply(num1,num2);
 }
 
 function add(num1,num2) {
@@ -193,7 +196,7 @@ function divide(num1,num2) {
         alert('you cannot divide number by 0!!');
         return;
     }
-    return ((num1)/(num2)*10)/10;
+    return(num1*10)/(num2*10);
 }
 
 function multiply(num1,num2) {
@@ -204,5 +207,5 @@ function operate(num1,operator,num2) {
     if (operator == '+') add(num1, num2);
     if (operator == '-') suntract(num1, num2);
     if (operator == '/') divide(num1, num2);
-    if (operator == 'x') multiply(num1, num2);
+    if (operator == '*') multiply(num1, num2);
 }
