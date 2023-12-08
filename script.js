@@ -14,12 +14,18 @@ const deleteBtn = document.querySelector('.delete');
 const displayInput = document.querySelector('.display-input')
 const displayAnswer = document.querySelector('.display-answer')
 const buttons = document.querySelectorAll('.btn');
+const calculator = document.querySelector('.calculator')
 
 displayAnswer.innerText = outputString;
 
 buttons.forEach(button => {
-    button.addEventListener('click', output)
+    button.addEventListener('click', (e) => {output(e.target.innerText)})
 })
+document.addEventListener('keydown', e=> {
+    handleKeyboardInput(e.key);
+    console.log(e);
+})
+
 clearBtn.onclick = clear;
 deleteBtn.onclick = deleteNum;
 
@@ -40,40 +46,45 @@ function deleteNum() {
     
 }
 
-function output(e) {
+function handleKeyboardInput(key) {
+    const number = '1234567890'
+    if (number.includes(key)) output(key)
+}
+
+function output(target) {
     // This if statement checks to see if operator has been assigned to distinguish whether button selected is for num1 or num2
-    if(!isNaN(Number(e.target.innerText)) && !operator) {
+    if(!isNaN(Number(target)) && !operator) {
         if (firstNumString.length > 8) return;
-        if (e.target.innerText === '0' && firstNumString === '0') return;  // This eliminates duplicate zeros if the num is already zero
+        if (target === '0' && firstNumString === '0') return;  // This eliminates duplicate zeros if the num is already zero
         else if(answer || answer === 0) { // This checks to see if '+' has been pressed. 
-            resetAnswer(e.target.innerText);
+            resetAnswer(target);
         } else {
-        [num1, firstNumString] = updateNum(e.target.innerText, firstNumString, num1)
+        [num1, firstNumString] = updateNum(target, firstNumString, num1)
         outputString = firstNumString;
         }
     } 
 
-    else if(isNaN(Number(e.target.innerText)) && e.target.innerText !== '=' && e.target.innerText !== '.') {
+    else if(isNaN(Number(target)) && target !== '=' && target !== '.') {
         if (operator && (num2 || num2 === 0)) { // This statement allows math to be executed when operator is pressed
             answer = executeMath(operator);
             resetVariable();
         }
-        updateOperator(e.target.innerText)
+        updateOperator(target)
     }
     // This statement checks to see if num2 needs to be selected.
-     else if(operator && !isNaN(Number(e.target.innerText))) {
+     else if(operator && !isNaN(Number(target))) {
         if(secondNumString.length > 8) return;
-        if (e.target.innerText === '0' && secondNumString === '0')return;  
+        if (target === '0' && secondNumString === '0')return;  
         if (!secondNumString) displayAnswer.innerText = '';
-        [num2, secondNumString] = updateNum(e.target.innerText, secondNumString, num2);
-        outputString += e.target.innerText;
+        [num2, secondNumString] = updateNum(target, secondNumString, num2);
+        outputString += target;
     }
 
-    else if(e.target.innerText == '.') {
-        createDecimal(e.target.innerText);
+    else if(target == '.') {
+        createDecimal(target);
     }
 
-    else if(e.target.innerText == '=' && (num2 || num2 === 0)) {
+    else if(target == '=' && (num2 || num2 === 0)) {
         answer = executeMath(operator)
         resetVariable();
     }
@@ -165,7 +176,7 @@ function createDecimal(decimal) {
 function executeMath(operator) {
     if (operator == '+') return add(num1,num2);
     if (operator == '-') return subtract(num1,num2);
-    if (operator == '%') return divide(num1,num2);
+    if (operator == '/') return divide(num1,num2);
     if (operator == 'x') return multiply(num1,num2);
 }
 
@@ -192,6 +203,6 @@ function multiply(num1,num2) {
 function operate(num1,operator,num2) {
     if (operator == '+') add(num1, num2);
     if (operator == '-') suntract(num1, num2);
-    if (operator == '%') divide(num1, num2);
+    if (operator == '/') divide(num1, num2);
     if (operator == 'x') multiply(num1, num2);
 }
