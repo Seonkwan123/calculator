@@ -1,3 +1,3 @@
 # calculator
 
-Goal of this project is to build a calculator to do simple tasks
+Link: https://seonkwan123.github.io/calculator/
